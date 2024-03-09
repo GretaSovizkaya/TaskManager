@@ -4,7 +4,7 @@ public class TaskManager {
     private Map<Integer, Task> tasks = new HashMap<>();
     private Map<Integer, Epic> epics = new HashMap<>();
     private Map<Integer, Subtask> subtasks = new HashMap<>();
-    private int newId = 1;
+    private static int newId = 1;
     public List<Task> getAllTypesTasks() {
         return new ArrayList<>(tasks.values());
     }

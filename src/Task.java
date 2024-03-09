@@ -1,20 +1,19 @@
 import java.util.*;
 
 public class Task {
-    private String name;
-    private int id;
-    private String description;
+    protected String name;
+    protected int id;
+    protected String description;
 
-    private Status status;
+    protected Status status;
 
     public Task() {
     }
 
-    public Task(int id,String name, String description, Status status) {
+    public Task(String name, String description) {
         this.name = name;
-        this.id = id;
         this.description = description;
-        this.status = Status.valueOf(String.valueOf(status));
+        this.status = Status.NEW;
     }
 
     public String getName() {
@@ -61,5 +60,14 @@ public class Task {
     public int hashCode() {
         return Objects.hash(id);
     }
-}
 
+    @Override
+    public String toString() {
+        return "Task{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
+    }
+}

@@ -1,12 +1,11 @@
 
-import java.util.*;
-
 public class Main {
 
     public static void main(String[] args) {
+        System.out.println("Поехали!");
         TaskManager manager = new TaskManager();
-        Task task1 = new Task(1, "Задача1", "описание задачи1", Status.NEW);
-        Task task2 = new Task(2, "Задача2", "описание задачи2", Status.NEW);
+        Task task1 = new Task("Задача1", "описание задачи1");
+        Task task2 = new Task("Задача2", "описание задачи2");
 
         Epic epic1 = new Epic(3, "Эпик 1", "Описание эпика 1", Status.NEW);
         Epic epic2 = new Epic(4, "Эпик 2", "Описание эпика 2", Status.NEW);
@@ -15,7 +14,6 @@ public class Main {
         Subtask subtask2 = new Subtask(6, "Подзадача 2", "Описание подзадачи 2", Status.NEW, epic1);
         Subtask subtask3 = new Subtask(7, "Подзадача эпика 2", "Описание подзадачи", Status.NEW,
                 epic2);
-
 
         manager.createNewTask(task1);
         manager.createNewTask(task2);
@@ -35,6 +33,7 @@ public class Main {
         manager.removeTaskById(3);
 
 
+
         for (Task task : manager.getAllTypesTasks()) {
             System.out.println("ID: " + task.getId() + ", Название: " + task.getName() + ", Описание: "
                     + task.getDescription() + ", Статус: " + task.getStatus());
@@ -46,9 +45,12 @@ public class Main {
             System.out.println("ID: " + subtask.getId() + ", Название: " + subtask.getName() + ", Описание: "
                     + subtask.getDescription() + ", Статус: " + subtask.getStatus());
         }
+        subtask2.setStatus(Status.IN_PROGRESS); // Изменяем статус подзадачи
+        manager.updateEpicStatus(epic1);
 
+        System.out.println("Статус эпика 1 после изменения статуса подзадачи:");
+        System.out.println("Статус: " + epic1.getStatus());
 
     }
 
 }
-git status
