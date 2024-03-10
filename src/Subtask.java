@@ -1,7 +1,7 @@
 public class Subtask extends Task {
     private Epic epic;
 
-    public Subtask(int id, String name, String description, Status status, Epic epic) {
+    public Subtask(int id, String name, String description, Epic epic) {
         super(name, description);
         this.epic = epic;
     }
