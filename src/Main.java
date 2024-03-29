@@ -3,7 +3,9 @@ public class Main {
 
     public static void main(String[] args) {
         System.out.println("Поехали!");
-        TaskManager manager = new TaskManager();
+        InMemoryTaskManager manager = new InMemoryTaskManager();
+
+
         Task task1 = new Task("Задача1", "описание задачи1");
         Task task2 = new Task("Задача2", "описание задачи2");
 
@@ -30,7 +32,6 @@ public class Main {
 
         manager.removeTaskById(1);
         manager.removeTaskById(3);
-
 
 
         for (Task task : manager.getAllTypesTasks()) {
