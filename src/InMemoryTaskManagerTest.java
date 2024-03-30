@@ -78,7 +78,7 @@ public class InMemoryTaskManagerTest {
     @Test
     public void shouldNotConflictGeneratedAndSpecifiedTaskIds() {
         // Arrange
-        Task task1 = new Task("Task 1", "Description");
+        Task task1 = new Task("Task 1 ", "Description");
         InMemoryTaskManager manager = new InMemoryTaskManager();
 
         // Act
