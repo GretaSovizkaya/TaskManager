@@ -6,6 +6,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InMemoryTaskManagerTest {
+    //исходя из ТЗ и обязательных пунктов вроде как все здесь:))
     private InMemoryTaskManager manager;
 
     @BeforeEach
@@ -72,6 +73,7 @@ public class InMemoryTaskManagerTest {
         // Assert
         Assertions.assertNotNull(manager.getTaskById(3));
     }
+
 
     @Test
     public void shouldNotConflictGeneratedAndSpecifiedTaskIds() {

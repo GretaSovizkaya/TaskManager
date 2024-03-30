@@ -1,9 +1,11 @@
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("Поехали!");
-        InMemoryTaskManager manager = new InMemoryTaskManager();
+        HistoryManager historyManager = new InMemoryHistoryManager();
+        TaskManager manager = new InMemoryTaskManager(historyManager);
 
 
         Task task1 = new Task("Задача1", "описание задачи1");
@@ -33,7 +35,6 @@ public class Main {
         manager.removeTaskById(1);
         manager.removeTaskById(3);
 
-
         for (Task task : manager.getAllTypesTasks()) {
             System.out.println("ID: " + task.getId() + ", Название: " + task.getName() + ", Описание: "
                     + task.getDescription() + ", Статус: " + task.getStatus());
@@ -50,6 +51,14 @@ public class Main {
 
         System.out.println("Статус эпика 1 после изменения статуса подзадачи:");
         System.out.println("Статус: " + epic1.getStatus());
+
+        List<Task> history = manager.getHistory();
+
+        // Выводим историю изменений на экран
+        System.out.println("История изменений:");
+        for (Task task : history) {
+            System.out.println(task); // Предполагается, что у класса Task определен метод toString()
+        }
 
     }
 

@@ -51,10 +51,12 @@ public class InMemoryTaskManager implements TaskManager {
     public void createNewTask(Task task) {
         int newId = generateNewId();
         task.setId(newId);
+        historyManager.add(task);
         tasks.put(newId, task);
         if (task instanceof Epic) {
             epics.put(newId, (Epic) task);
         }
+        System.out.println("Добавили задачку!");
     }
 
     private Integer generateNewId() {
@@ -68,10 +70,14 @@ public class InMemoryTaskManager implements TaskManager {
         if (task instanceof Epic) {
             epics.put(task.getId(), (Epic) task);
         }
+        updateTaskHistory(task); // Добавление обновленной задачи в историю
     }
 
     public void removeTaskById(Integer id) {
-        tasks.remove(id);
+        Task removedTask = tasks.remove(id);
+        if (removedTask != null) {
+            updateTaskHistory(removedTask); // Добавление удаленной задачи в историю
+        }
         if (epics.containsKey(id)) {
             epics.remove(id);
         }
@@ -89,8 +95,10 @@ public class InMemoryTaskManager implements TaskManager {
     public void addSubtaskToEpic(Subtask subtask, Epic epic) {
         subtasks.put(subtask.getId(), subtask);
         epic.getSubtasks().add(subtask);
-        updateEpicStatus(epic);
+        updateEpicStatus(epic); // Обновление статуса эпика
+        updateTaskHistory(subtask); // Добавление подзадачи в историю
     }
+
 
     public void updateEpicStatus(Epic epic) {
         Status newStatus = Status.NEW;
@@ -99,14 +107,18 @@ public class InMemoryTaskManager implements TaskManager {
                 newStatus = subtask.getStatus();
             }
         epic.setStatus(newStatus);
+        updateTaskHistory(epic); // Обновление эпика в истории
     }
+
 
     public void createNewEpic(Epic epic) {
         int newId = generateNewId();
         epic.setId(newId);
         tasks.put(newId, epic);
         epics.put(newId, epic);
+        updateTaskHistory(epic); // Добавление нового эпика в историю
     }
+
 
     public Subtask getSubtaskById(Integer id) {
         Subtask subtask = subtasks.get(id);
@@ -127,5 +139,6 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Epic> getAllEpics() {
         return new ArrayList<>(epics.values());
     }
+
 
 }
