@@ -1,3 +1,5 @@
+package Managers;
+import Basis.*;
 import java.util.List;
 public interface TaskManager {
     List<Task> getAllTypesTasks();
@@ -11,4 +13,8 @@ public interface TaskManager {
     void updateEpicStatus(Epic epic);
     void createNewEpic(Epic epic);
     List<Task> getHistory();
+    Subtask getSubtaskById(Integer id); //добавлено
+    Epic getEpicById(Integer id); //добавлено
+    List<Epic> getAllEpics(); //добавлено
+
 }

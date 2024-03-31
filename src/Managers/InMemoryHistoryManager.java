@@ -1,8 +1,10 @@
+package Managers;
+import Basis.*;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    private List<Task> history = new ArrayList<>(10);
+    private final List<Task> history = new ArrayList<>(10); //добавила final
 
     @Override
     public void add(Task task) {

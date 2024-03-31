@@ -1,7 +1,10 @@
+package Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-
-class HistoryManagerTest {
+import Managers.HistoryManager;
+import Managers.Managers;
+class HistoryManagerTest { //добавила тесты
 //надеюсь я верно поняла:))
     @Test
     public void addNewHistoryManager () {

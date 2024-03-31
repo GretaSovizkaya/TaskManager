@@ -1,4 +1,5 @@
-
+package Managers;
+import Basis.Task;
 import java.util.List;
 
 public interface HistoryManager {
