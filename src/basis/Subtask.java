@@ -1,4 +1,4 @@
-package Basis;
+package basis;
 
 public class Subtask extends Task {
     private Epic epic;
@@ -12,7 +12,7 @@ public class Subtask extends Task {
         return epic;
     }
 
-    public void setEpic(Epic epic) {
-        this.epic = epic;
+    public void setEpic(Subtask epic) {
+        this.epic = epic.getEpic();
     }
 }

@@ -1,8 +1,8 @@
-import Basis.Epic;
-import Basis.Status;
-import Basis.Subtask;
-import Basis.Task;
-import Managers.*;
+import basis.Epic;
+import basis.Status;
+import basis.Subtask;
+import basis.Task;
+import managers.*;
 import java.util.List;
 
 public class Main {
@@ -20,8 +20,7 @@ public class Main {
         Epic epic2 = new Epic(4, "Эпик 2", "Описание эпика 2");
 
         Subtask subtask1 = new Subtask(5, "Подзадача 1", "Описание подзадачи 1",epic1);
-        Subtask subtask2 = new Subtask(6, "Подзадача 2", "Описание подзадачи 2",epic1);
-        Subtask subtask3 = new Subtask(7, "Подзадача эпика 2", "Описание подзадачи", epic2);
+        Subtask subtask2 = new Subtask(6, "Подзадача эпика 2", "Описание подзадачи", epic2);
 
         manager.createNewTask(task1);
         manager.createNewTask(task2);
@@ -31,8 +30,7 @@ public class Main {
 
 
         manager.addSubtaskToEpic(subtask1, epic1);
-        manager.addSubtaskToEpic(subtask2, epic1);
-        manager.addSubtaskToEpic(subtask3, epic2);
+        manager.addSubtaskToEpic(subtask2, epic2);
 
         task2.setStatus(Status.IN_PROGRESS);
         epic2.setStatus(Status.DONE);
@@ -62,7 +60,7 @@ public class Main {
         // Выводим историю изменений на экран
         System.out.println("История изменений:");
         for (Task task : history) {
-            System.out.println(task); // Предполагается, что у класса Task определен метод toString()
+            System.out.println(task);
         }
 
     }
