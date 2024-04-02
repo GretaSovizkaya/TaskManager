@@ -1,9 +1,8 @@
-package Test;
+package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import Managers.HistoryManager;
-import Managers.Managers;
+import managers.Managers;
 class HistoryManagerTest { //добавила тесты
 //надеюсь я верно поняла:))
     @Test
@@ -15,6 +14,5 @@ class HistoryManagerTest { //добавила тесты
     public void addNewTaskManager () {
         assertNotNull(Managers.getDefault());
     }
-
 
 }

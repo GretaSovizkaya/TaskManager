@@ -1,5 +1,5 @@
-package Managers;
-import Basis.*;
+package managers;
+import basis.*;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {

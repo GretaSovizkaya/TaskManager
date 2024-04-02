@@ -1,5 +1,5 @@
-package Managers;
-import Basis.*;
+package managers;
+import basis.*;
 import java.util.List;
 public interface TaskManager {
     List<Task> getAllTypesTasks();
@@ -16,5 +16,5 @@ public interface TaskManager {
     Subtask getSubtaskById(Integer id); //добавлено
     Epic getEpicById(Integer id); //добавлено
     List<Epic> getAllEpics(); //добавлено
-
+    void createNewSubtask(Subtask subtask);
 }
