@@ -28,7 +28,6 @@ public class Main {
         manager.createNewEpic(epic1);
         manager.createNewEpic(epic2);
 
-
         manager.addSubtaskToEpic(subtask1, epic1);
         manager.addSubtaskToEpic(subtask2, epic2);
 
@@ -38,24 +37,15 @@ public class Main {
         manager.removeTaskById(1);
         manager.removeTaskById(3);
 
-        for (Task task : manager.getAllTypesTasks()) {
-            System.out.println("ID: " + task.getId() + ", Название: " + task.getName() + ", Описание: "
-                    + task.getDescription() + ", Статус: " + task.getStatus());
-        }
-
-
-        System.out.println("Подзадачи для эпика 1:");
-        for (Subtask subtask : manager.getSubtasksOfEpic(3)) {
-            System.out.println("ID: " + subtask.getId() + ", Название: " + subtask.getName() + ", Описание: "
-                    + subtask.getDescription() + ", Статус: " + subtask.getStatus());
-        }
         subtask2.setStatus(Status.IN_PROGRESS); // Изменяем статус подзадачи
         manager.updateEpicStatus(epic1);
 
-        System.out.println("Статус эпика 1 после изменения статуса подзадачи:");
-        System.out.println("Статус: " + epic1.getStatus());
-
         List<Task> history = manager.getHistory();
+
+        System.out.println("Задачи:");
+        for (Task task : manager.getAllTypesTasks()) {
+            System.out.println(task);
+        }
 
         // Выводим историю изменений на экран
         System.out.println("История изменений:");

@@ -4,6 +4,7 @@ import basis.*;
 import managers.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -12,10 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class InMemoryTaskManagerTest {
     public static InMemoryTaskManager manager;
-    private int id;
 
-    @BeforeAll
-    public static void setup() {
+    // id убрала
+    @BeforeEach // использую BeforeEach
+    public void setup() {
         manager = new InMemoryTaskManager();
     }
 
@@ -69,7 +70,7 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void shouldAddDifferentTypesOfTasksToManager() {
-        TaskManager manager = new InMemoryTaskManager();
+        // строку удалила
         Task task = new Task("Task", "Description");
         Epic epic = new Epic(2, "Epic", "Description");
         Subtask subtask = new Subtask(1, "Subtask", "Description", epic);
@@ -89,7 +90,7 @@ public class InMemoryTaskManagerTest {
     @Test
     public void shouldNotModifyTaskWhenAddingToManager() { // тест на создание неизменности задачи
         Task task = new Task("Task", "Description");
-        InMemoryTaskManager manager = new InMemoryTaskManager();
+        // строку удалила
         manager.createNewTask(task);
         Task retrievedTask = manager.getTaskById(task.getId()); // Получаем задачу по id, сразу после добавления
 
@@ -100,21 +101,18 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void shouldNotConflictGeneratedAndSpecifiedTaskIds() { //проверка на отсутствие конфликта между айди
-        // Arrange
         Task task1 = new Task("Task 1 ", "Description");
         task1.setId(1);
-        InMemoryTaskManager manager = new InMemoryTaskManager();
-
+        // строку удалила
         manager.createNewTask(task1);
 
         Task retrievedTask = manager.getTaskById(task1.getId()); // Получаем задачу по заданному id
-        // Проверяем, что полученная задача и добавленная задача идентичны
         Assertions.assertEquals(task1, retrievedTask);
     }
 
-   @Test
+    @Test
     public void shouldSavePreviousVersionOfTaskInHistoryManager() {
-        TaskManager manager = Managers.getDefault();
+        // строку удалила
         Task task = new Task("Task", "Description");
         manager.createNewTask(task);
 
@@ -132,6 +130,7 @@ public class InMemoryTaskManagerTest {
 
         // Проверяем, что вторая версия задачи сохранена в истории и соответствует обновленной задаче
         assertEquals(taskVersion2, history.get(1));
+        assertEquals(2, history.size()); //проверяю, что размер истории составляет 2
     }
 }
 
