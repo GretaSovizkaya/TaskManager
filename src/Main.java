@@ -40,7 +40,7 @@ public class Main {
         subtask2.setStatus(Status.IN_PROGRESS); // Изменяем статус подзадачи
         manager.updateEpicStatus(epic1);
 
-        List<Task> history = manager.getHistory();
+        List<Task> history = manager.getTasks();
 
         System.out.println("Задачи:");
         for (Task task : manager.getAllTypesTasks()) {

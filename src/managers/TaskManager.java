@@ -12,7 +12,7 @@ public interface TaskManager {
     void addSubtaskToEpic(Subtask subtask, Epic epic);
     void updateEpicStatus(Epic epic);
     void createNewEpic(Epic epic);
-    List<Task> getHistory();
+    List<Task> getTasks();
     Subtask getSubtaskById(Integer id); //добавлено
     Epic getEpicById(Integer id); //добавлено
     List<Epic> getAllEpics(); //добавлено

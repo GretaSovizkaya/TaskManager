@@ -1,6 +1,7 @@
 package managers;
 
 import basis.*;
+import org.w3c.dom.Node;
 
 import java.util.*;
 
@@ -8,6 +9,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final HistoryManager historyManager;
     private Map<Integer, Task> tasks = new HashMap<>();
     private Map<Integer, Epic> epics = new HashMap<>();
+
     private Map<Integer, Subtask> subtasks = new HashMap<>();
     private static int newId = 1;
 
@@ -159,8 +161,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Task> getHistory() {
-        return historyManager.getHistory();
+    public List<Task> getTasks() {
+        return historyManager.getTasks();
     }
 
 }
