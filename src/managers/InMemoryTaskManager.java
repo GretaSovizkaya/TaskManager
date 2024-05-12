@@ -120,6 +120,7 @@ public class InMemoryTaskManager implements TaskManager {
         tasks.put(newId, epic);
         epics.put(newId, epic); //убрала добавление истории
     }
+
     @Override
     public void createNewSubtask(Subtask subtask) {
         int newId = generateNewId();
@@ -130,6 +131,7 @@ public class InMemoryTaskManager implements TaskManager {
         updateEpicStatus(epic);
         tasks.put(newId, subtask); //убрала добавление истории
     }
+
     @Override
     public void addSubtaskToEpic(Subtask subtask, Epic epic) {
         subtasks.put(subtask.getId(), subtask);

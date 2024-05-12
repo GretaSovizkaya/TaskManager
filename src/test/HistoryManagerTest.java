@@ -7,16 +7,18 @@ import managers.InMemoryHistoryManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import managers.Managers;
+
 import java.util.*;
+
 class HistoryManagerTest { //добавила тесты
-//надеюсь я верно поняла:))
+    //надеюсь я верно поняла:))
     @Test
-    public void addNewHistoryManager () {
+    public void addNewHistoryManager() {
         assertNotNull(Managers.getDefaultHistory());
     }
 
     @Test
-    public void addNewTaskManager () {
+    public void addNewTaskManager() {
         assertNotNull(Managers.getDefault());
     }
 
@@ -37,7 +39,7 @@ class HistoryManagerTest { //добавила тесты
         historyManager.add(task);
         historyManager.remove(666);
         List<Task> tasks = historyManager.getTasks();
-        assertEquals(1,historyManager.getTasks().size());
+        assertEquals(1, historyManager.getTasks().size());
     }
 
     @Test
@@ -50,13 +52,6 @@ class HistoryManagerTest { //добавила тесты
         assertEquals(1, tasks.size());
         assertEquals(task, tasks.get(0));
     }
-
-
-
-
-
-
-
 
 
 }
