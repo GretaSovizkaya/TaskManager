@@ -1,5 +1,7 @@
 package managers;
+
 import basis.*;
+
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
@@ -21,7 +23,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     @Override
-    public List<Task> getTasks() {
+    public List<Task> getHistory() {
         List<Task> tasks = new ArrayList<>();
         Node current = head;
         while (current != null) {

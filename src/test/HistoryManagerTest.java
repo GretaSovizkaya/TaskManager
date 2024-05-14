@@ -10,8 +10,7 @@ import managers.Managers;
 
 import java.util.*;
 
-class HistoryManagerTest { //добавила тесты
-    //надеюсь я верно поняла:))
+class HistoryManagerTest {
     @Test
     public void addNewHistoryManager() {
         assertNotNull(Managers.getDefaultHistory());
@@ -28,7 +27,7 @@ class HistoryManagerTest { //добавила тесты
         Task task = new Task("Task", "Description");
         historyManager.add(task);
         historyManager.remove(task.getId());
-        List<Task> tasks = historyManager.getTasks();
+        List<Task> tasks = historyManager.getHistory();
         assertTrue(tasks.isEmpty());
     }
 
@@ -38,8 +37,8 @@ class HistoryManagerTest { //добавила тесты
         Task task = new Task("Task", "Descpr");
         historyManager.add(task);
         historyManager.remove(666);
-        List<Task> tasks = historyManager.getTasks();
-        assertEquals(1, historyManager.getTasks().size());
+        List<Task> tasks = historyManager.getHistory();
+        assertEquals(1, historyManager.getHistory().size());
     }
 
     @Test
@@ -48,10 +47,8 @@ class HistoryManagerTest { //добавила тесты
         Task task = new Task("Task", "Description");
         historyManager.add(task);
         historyManager.add(task); // Попытка добавить дубликат
-        List<Task> tasks = historyManager.getTasks();
+        List<Task> tasks = historyManager.getHistory();
         assertEquals(1, tasks.size());
         assertEquals(task, tasks.get(0));
     }
-
-
 }

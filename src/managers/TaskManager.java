@@ -25,7 +25,7 @@ public interface TaskManager {
 
     void createNewEpic(Epic epic);
 
-    List<Task> getTasks();
+    List<Task> getHistory();
 
     Subtask getSubtaskById(Integer id); //добавлено
 

@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Поехали!");
         HistoryManager historyManager = new InMemoryHistoryManager();
-        TaskManager manager = new InMemoryTaskManager(historyManager);
+        TaskManager manager = new InMemoryTaskManager();
 
 
         Task task1 = new Task("Задача1", "описание задачи1");
@@ -40,7 +40,7 @@ public class Main {
         subtask2.setStatus(Status.IN_PROGRESS); // Изменяем статус подзадачи
         manager.updateEpicStatus(epic1);
 
-        List<Task> history = manager.getTasks();
+        List<Task> history = manager.getHistory();
 
         System.out.println("Задачи:");
         for (Task task : manager.getAllTypesTasks()) {

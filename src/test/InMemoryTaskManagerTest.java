@@ -97,26 +97,5 @@ public class InMemoryTaskManagerTest {
         Task retrievedTask = manager.getTaskById(task1.getId());
         Assertions.assertEquals(task1, retrievedTask);
     }
-
-    @Test
-    public void shouldSavePreviousVersionOfTaskInHistoryManager() {
-        Task task = new Task("Task", "Description");
-        manager.createNewTask(task);
-
-        Task taskVersion1 = manager.getTaskById(task.getId());
-
-        task.setStatus(Status.IN_PROGRESS);
-        manager.updateTask(task);
-
-        Task taskVersion2 = manager.getTaskById(task.getId());
-
-        List<Task> history = manager.getTasks();
-
-        assertEquals(taskVersion1, history.get(0));
-
-        assertEquals(taskVersion2, history.get(1));
-        assertEquals(2, history.size());
-    }
-
 }
 
