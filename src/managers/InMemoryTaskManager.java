@@ -1,7 +1,6 @@
 package managers;
 
 import basis.*;
-import org.w3c.dom.Node;
 
 import java.util.*;
 
@@ -61,6 +60,20 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
+    public void updateEpic(Epic epic){
+        epics.put(epic.getId(), epic);
+        updateEpicStatus(epic);
+    }
+    @Override
+    public void updateSubtask(Subtask subtask){
+        subtasks.put(subtask.getId(), subtask);
+        Epic epic = subtask.getEpic();
+        if (epic != null) {
+            updateEpicStatus(epic);
+        }
+    }
+
+    @Override
     public void removeTaskById(Integer id) {
         tasks.remove(id);
     }
@@ -96,15 +109,17 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return new ArrayList<>();
     }
+    //!!!
 
-    @Override
-    public void updateEpicStatus(Epic epic) {
-        Status newStatus = Status.NEW;
-        for (Subtask subtask : epic.getSubtasks())
-            if (subtask.getStatus().compareTo(newStatus) > 0) {
-                newStatus = subtask.getStatus();
-            }
-        epic.setStatus(newStatus);
+    private void updateEpicStatus(Epic epic) {
+        if (!epic.getSubtasks().isEmpty()) {
+            Status newStatus = Status.NEW;
+            for (Subtask subtask : epic.getSubtasks())
+                if (subtask.getStatus().compareTo(newStatus) > 0) {
+                    newStatus = subtask.getStatus();
+                }
+            epic.setStatus(newStatus);
+        }
     }
 
     @Override

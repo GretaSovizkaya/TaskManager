@@ -30,10 +30,10 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void nonMatchingSubtasksId() {
-        Epic epic = new Epic(1, "Epic", "Description");
-        Subtask subtask1 = new Subtask(2, "Subtask", "Description", epic);
+        Epic epic = new Epic("Epic", "Description");
+        Subtask subtask1 = new Subtask("Subtask", "Description", epic);
         subtask1.setId(2); // Задаем одинаковые id для подзадач
-        Subtask subtask2 = new Subtask(2, "Subtask", "Description", epic);
+        Subtask subtask2 = new Subtask("Subtask", "Description", epic);
         subtask2.setId(2);
 
         Assertions.assertEquals(subtask1, subtask2, "ошибка");
@@ -41,10 +41,10 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void nonMatchingEpicId() {
-        Epic epic = new Epic(1, "Epic1", "Hello Hello");
+        Epic epic = new Epic("Epic1", "Hello Hello");
         epic.setId(1);
 
-        Epic epic1 = new Epic(1, "Epic1", "Hello Hello");
+        Epic epic1 = new Epic("Epic1", "Hello Hello");
         epic1.setId(1);
 
         assertEquals(epic, epic1, "Ошибка");
@@ -52,7 +52,7 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void shouldNotAllowSubtaskToBeItsOwnEpic() {
-        Subtask subtask = new Subtask(1, "Subtask", "Description", null);
+        Subtask subtask = new Subtask("Subtask", "Description", null);
 
         subtask.setEpic(subtask);
 
@@ -64,8 +64,8 @@ public class InMemoryTaskManagerTest {
     public void shouldAddDifferentTypesOfTasksToManager() {
         // строку удалила
         Task task = new Task("Task", "Description");
-        Epic epic = new Epic(2, "Epic", "Description");
-        Subtask subtask = new Subtask(1, "Subtask", "Description", epic);
+        Epic epic = new Epic("Epic", "Description");
+        Subtask subtask = new Subtask("Subtask", "Description", epic);
 
         manager.createNewTask(task);
         manager.createNewTask(epic);

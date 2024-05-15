@@ -15,13 +15,15 @@ public interface TaskManager {
 
     void updateTask(Task task);
 
+    void updateEpic(Epic epic);
+
+    void updateSubtask(Subtask subtask);
+
     void removeTaskById(Integer id);
 
     List<Subtask> getSubtasksOfEpic(Integer epicId);
 
     void addSubtaskToEpic(Subtask subtask, Epic epic);
-
-    void updateEpicStatus(Epic epic);
 
     void createNewEpic(Epic epic);
 
@@ -38,4 +40,5 @@ public interface TaskManager {
     void removeEpicById(Integer id);
 
     void removeSubtaskById(Integer id);
+
 }

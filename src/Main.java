@@ -16,11 +16,11 @@ public class Main {
         Task task1 = new Task("Задача1", "описание задачи1");
         Task task2 = new Task("Задача2", "описание задачи2");
 
-        Epic epic1 = new Epic(3, "Эпик 1", "Описание эпика 1");
-        Epic epic2 = new Epic(4, "Эпик 2", "Описание эпика 2");
+        Epic epic1 = new Epic("Эпик 1", "Описание эпика 1");
+        Epic epic2 = new Epic("Эпик 2", "Описание эпика 2");
 
-        Subtask subtask1 = new Subtask(5, "Подзадача 1", "Описание подзадачи 1",epic1);
-        Subtask subtask2 = new Subtask(6, "Подзадача эпика 2", "Описание подзадачи", epic2);
+        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1",epic1);
+        Subtask subtask2 = new Subtask("Подзадача эпика 2", "Описание подзадачи", epic2);
 
         manager.createNewTask(task1);
         manager.createNewTask(task2);
@@ -38,7 +38,6 @@ public class Main {
         manager.removeTaskById(3);
 
         subtask2.setStatus(Status.IN_PROGRESS); // Изменяем статус подзадачи
-        manager.updateEpicStatus(epic1);
 
         List<Task> history = manager.getHistory();
 
