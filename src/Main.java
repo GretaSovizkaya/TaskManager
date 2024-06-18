@@ -1,3 +1,4 @@
+
 import basis.Epic;
 import basis.Status;
 import basis.Subtask;
@@ -31,7 +32,7 @@ public class Main {
             manager.createNewSubtask(subtask3);
 
             // Сохраняем задачи в файл
-            //manager.save();
+            manager.save();
 
             // Выводим содержимое файла для проверки
             System.out.println("Saved tasks to file:");
@@ -51,6 +52,7 @@ public class Main {
 
         } catch (IOException e) {
             e.printStackTrace();
+       
         }
     }
 }
