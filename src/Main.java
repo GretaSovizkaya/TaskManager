@@ -1,57 +1,58 @@
+
+
 import basis.Epic;
 import basis.Status;
 import basis.Subtask;
 import basis.Task;
-import managers.*;
-import java.util.List;
+import managers.FileBackedTaskManager;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public class Main {
-
     public static void main(String[] args) {
-        System.out.println("Поехали!");
-        HistoryManager historyManager = new InMemoryHistoryManager();
-        TaskManager manager = new InMemoryTaskManager();
+        try {
+            // Создаем временный файл
+            File tempFile = File.createTempFile("tasks", ".csv");
 
+            // Создаем FileBackedTaskManager с временным файлом
+            FileBackedTaskManager manager = new FileBackedTaskManager(tempFile);
 
-        Task task1 = new Task("Задача1", "описание задачи1");
-        Task task2 = new Task("Задача2", "описание задачи2");
+            // Создаем задачи
+            Task task1 = new Task("Task1", "Description task1");
+            task1.setStatus(Status.NEW);
+            manager.createNewTask(task1);
 
-        Epic epic1 = new Epic("Эпик 1", "Описание эпика 1");
-        Epic epic2 = new Epic("Эпик 2", "Описание эпика 2");
+            Epic epic2 = new Epic("Epic2", "Description epic2");
+            epic2.setStatus(Status.DONE);
+            manager.createNewEpic(epic2);
 
-        Subtask subtask1 = new Subtask("Подзадача 1", "Описание подзадачи 1",epic1);
-        Subtask subtask2 = new Subtask("Подзадача эпика 2", "Описание подзадачи", epic2);
+            Subtask subtask3 = new Subtask("Sub Task3", "Description sub task3", epic2);
+            subtask3.setStatus(Status.DONE);
+            manager.createNewSubtask(subtask3);
 
-        manager.createNewTask(task1);
-        manager.createNewTask(task2);
+            // Сохраняем задачи в файл
+            manager.save();
 
-        manager.createNewEpic(epic1);
-        manager.createNewEpic(epic2);
+            // Выводим содержимое файла для проверки
+            System.out.println("Saved tasks to file:");
+            Files.lines(tempFile.toPath()).forEach(System.out::println);
 
-        manager.addSubtaskToEpic(subtask1, epic1);
-        manager.addSubtaskToEpic(subtask2, epic2);
+            // Загружаем задачи из файла
+            FileBackedTaskManager loadedManager = FileBackedTaskManager.loadFromFile(tempFile);
 
-        task2.setStatus(Status.IN_PROGRESS);
-        epic2.setStatus(Status.DONE);
+            // Выводим загруженные задачи для проверки
+            System.out.println("\nLoaded tasks from file:");
+            for (Task task : loadedManager.getAllTypesTasks()) {
+                System.out.println(task);
+            }
 
-        manager.removeTaskById(1);
-        manager.removeTaskById(3);
+            // Удаляем временный файл
+            tempFile.deleteOnExit();
 
-        subtask2.setStatus(Status.IN_PROGRESS); // Изменяем статус подзадачи
-
-        List<Task> history = manager.getHistory();
-
-        System.out.println("Задачи:");
-        for (Task task : manager.getAllTypesTasks()) {
-            System.out.println(task);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        // Выводим историю изменений на экран
-        System.out.println("История изменений:");
-        for (Task task : history) {
-            System.out.println(task);
-        }
-
     }
-
 }

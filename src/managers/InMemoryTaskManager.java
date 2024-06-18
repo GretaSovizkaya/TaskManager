@@ -6,10 +6,11 @@ import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     private final HistoryManager historyManager;
-    private Map<Integer, Task> tasks = new HashMap<>();
-    private Map<Integer, Epic> epics = new HashMap<>();
-    private Map<Integer, Subtask> subtasks = new HashMap<>();//пустую строку удалила
-    private static int newId = 1;
+    protected Map<Integer, Task> tasks = new HashMap<>();
+    protected Map<Integer, Epic> epics = new HashMap<>();
+    protected Map<Integer, Subtask> subtasks = new HashMap<>();//пустую строку удалила
+    protected static int newId = 1;
+
 
     //использую Managers
     public InMemoryTaskManager() { // удалила конструктор и исправила
@@ -71,6 +72,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (epic != null) {
             updateEpicStatus(epic);
         }
+
     }
 
     @Override
@@ -109,7 +111,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return new ArrayList<>();
     }
-    //!!!
+
 
     private void updateEpicStatus(Epic epic) {
         if (!epic.getSubtasks().isEmpty()) {
