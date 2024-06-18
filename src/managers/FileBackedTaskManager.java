@@ -74,19 +74,19 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         save();
     }
 
-    public void save() {
+    private void save() {//исправлен модификатор доступа
         try {
             StringBuilder sb = new StringBuilder();
             sb.append("id,type,name,status,description,epic\n");
 
             for (Task task : tasks.values()) {
-                sb.append(taskToString(task)).append("\n");
+                sb.append(CSVFormat.taskToString(task)).append("\n");
             }
             for (Epic epic : epics.values()) {
-                sb.append(taskToString(epic)).append("\n");
+                sb.append(CSVFormat.taskToString(epic)).append("\n");
             }
             for (Subtask subtask : subtasks.values()) {
-                sb.append(taskToString(subtask)).append("\n");
+                sb.append(CSVFormat.taskToString(subtask)).append("\n");
             }
 
             Files.writeString(file.toPath(), sb.toString());
@@ -95,25 +95,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
     }
 
-    private String taskToString(Task task) {
-        String type = task instanceof Epic ? "EPIC" : task instanceof Subtask ? "SUBTASK" : "TASK";
-        String epicId = task instanceof Subtask ? String.valueOf(((Subtask) task).getEpic().getId()) : "";
-        return String.format("%d,%s,%s,%s,%s,%s",
-                task.getId(),
-                type,
-                task.getName(),
-                task.getStatus(),
-                task.getDescription(),
-                epicId);
-    }
-
     public static FileBackedTaskManager loadFromFile(File file) {
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
         try {
             List<String> lines = Files.readAllLines(file.toPath());
             for (String line : lines) {
                 if (line.equals("id,type,name,status,description,epic")) continue;
-                Task task = fromString(line, manager);
+                Task task = CSVFormat.fromString(line, manager);
                 if (task instanceof Epic) {
                     manager.epics.put(task.getId(), (Epic) task);
                 } else if (task instanceof Subtask) {
@@ -129,35 +117,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return manager;
     }
 
-    private static Task fromString(String value, FileBackedTaskManager manager) {
-        String[] fields = value.split(",");
-        int id = Integer.parseInt(fields[0]);
-        String type = fields[1];
-        String name = fields[2];
-        Status status = Status.valueOf(fields[3]);
-        String description = fields[4];
-        Task task;
-
-        switch (type) {
-            case "EPIC":
-                task = new Epic(name, description);
-                task.setId(id);
-                task.setStatus(status);
-                break;
-            case "SUBTASK":
-                Epic epic = manager.epics.get(Integer.parseInt(fields[5]));
-                task = new Subtask(name, description, epic);
-                task.setId(id);
-                task.setStatus(status);
-                break;
-            default:
-                task = new Task(name, description);
-                task.setId(id);
-                task.setStatus(status);
-        }
-
-        return task;
-    }
 
     static class ManagerSaveException extends RuntimeException {
         public ManagerSaveException(final Throwable cause) {
