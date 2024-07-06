@@ -1,15 +1,31 @@
 package basis;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Task {
     protected String name;
     protected int id;
     protected String description;
-
     protected Status status;
+    protected Duration duration; //field duration
+    protected LocalDateTime startTime; // field startTime
 
-    public Task() {
+    public Duration getDuration() { // getter
+        return duration;
+    }
+
+    public void setDuration(Duration duration) { // setter
+        this.duration = Duration.ofMinutes(duration.toMinutes());
+    }
+
+    public LocalDateTime getStartTime() { // getter
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startime) { //setter
+        this.startTime = startime;
     }
 
     public Task(String name, String description) {
@@ -17,6 +33,7 @@ public class Task {
         this.description = description;
         this.status = Status.NEW;
     }
+
 
     public String getName() {
         return name;

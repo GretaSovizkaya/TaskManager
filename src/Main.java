@@ -32,7 +32,7 @@ public class Main {
             manager.createNewSubtask(subtask3);
 
             // Сохраняем задачи в файл
-            manager.save();
+            //manager.save();
 
             // Выводим содержимое файла для проверки
             System.out.println("Saved tasks to file:");
