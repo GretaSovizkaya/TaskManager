@@ -11,7 +11,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected Map<Integer, Epic> epics = new HashMap<>();
     protected Map<Integer, Subtask> subtasks = new HashMap<>();//пустую строку удалила
     protected static int newId = 1;
-    private TreeSet <Task> priorityTasks;
+    public final TreeSet <Task> priorityTasks;
     static Comparator<Task> comparator = Comparator.comparing(Task::getStartTime);
 
     public InMemoryTaskManager() {
@@ -48,6 +48,9 @@ public class InMemoryTaskManager implements TaskManager {
         if (task instanceof Epic) {
             epics.put(newId, (Epic) task);
         }
+        if (task.getStartTime() != null) {
+            priorityTasks.add(task);
+        }
     }
 
     private Integer generateNewId() {
@@ -55,11 +58,11 @@ public class InMemoryTaskManager implements TaskManager {
     }
     public LocalDateTime getEndTime(Task task) { //дата и время завершения задачи
         if (task instanceof Epic) {
-            LocalDateTime time = subtasks.get(((Epic) task).getSubtasks().get(0)).getStartTime();
+            LocalDateTime time = subtasks.get(((Epic) task).getSubtasks().getFirst()).getStartTime();
             ((Epic) task).getSubtasks().stream()
                     .map(i -> subtasks.get(i).getDuration())
                     .filter(Objects::nonNull)
-                    .peek(i -> time.plus(i));
+                    .peek(time::plus);
 
             return time;
         }
@@ -140,9 +143,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Subtask> getSubtasksOfEpic(Integer epicId) {
-        Task epic = epics.get(epicId);
+        Epic epic = epics.get(epicId);
         if (epic != null) {
-            return new ArrayList<>(((Epic) epic).getSubtasks());
+            return new ArrayList<>(epic.getSubtasks());
         }
         return new ArrayList<>();
     }
