@@ -3,6 +3,7 @@ package managers;
 import basis.*;
 
 import java.util.List;
+import java.util.TreeSet;
 
 public interface TaskManager {
     List<Task> getAllTypesTasks();
@@ -41,4 +42,5 @@ public interface TaskManager {
 
     void removeSubtaskById(Integer id);
 
+    TreeSet<Task> getPrioritizedTasks();
 }

@@ -8,12 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,7 +39,7 @@ public class FileBackedTaskManagerTest {
 
     @Test
     public void testSaveMultipleTasks() {
-        Task task1 = new Task("Task", "smth");
+        Task task1 = new Task("Task", "smth", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         Epic epic = new Epic("Epic", "smth");
         Subtask subtask = new Subtask("Subtask", "smth", epic);
 
@@ -60,7 +58,7 @@ public class FileBackedTaskManagerTest {
 
     @Test
     public void createAndSaveTaskFromFile() throws IOException {
-        Task task = new Task("task", "smth");
+        Task task = new Task("task", "smth", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         LocalDate data = LocalDate.of(2024, 7, 06);
         LocalTime time = LocalTime.now();
         LocalDateTime dataTime = LocalDateTime.of(data, time);

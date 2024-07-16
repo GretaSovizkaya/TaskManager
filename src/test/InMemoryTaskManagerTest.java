@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -24,9 +23,9 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void nonMatchingTasksId() {
-        Task task1 = new Task("Task", "Description");
+        Task task1 = new Task("Task", "Description", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         task1.setId(1);
-        Task task2 = new Task("Task", "Description");
+        Task task2 = new Task("Task", "Description", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         task2.setId(1);
 
         Assertions.assertEquals(task1, task2, "ошибка");
@@ -67,7 +66,7 @@ public class InMemoryTaskManagerTest {
     @Test
     public void shouldAddDifferentTypesOfTasksToManager() {
         // строку удалила
-        Task task = new Task("Task", "Description");
+        Task task = new Task("Task", "Description", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         Epic epic = new Epic("Epic", "Description");
         Subtask subtask = new Subtask("Subtask", "Description", epic);
 
@@ -85,7 +84,7 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void shouldNotModifyTaskWhenAddingToManager() {
-        Task task = new Task("Task", "Description");
+        Task task = new Task("Task", "Description", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         manager.createNewTask(task);
         Task retrievedTask = manager.getTaskById(task.getId());
         Assertions.assertEquals(task, retrievedTask);
@@ -94,7 +93,7 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void shouldNotConflictGeneratedAndSpecifiedTaskIds() {
-        Task task1 = new Task("Task 1 ", "Description");
+        Task task1 = new Task("Task 1 ", "Description", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         task1.setId(1);
         manager.createNewTask(task1);
 
@@ -104,7 +103,7 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void shouldReturnEndTimeOfTask() { // проверка getEndTime
-        Task task = new Task("Task", "Description");
+        Task task = new Task("Task", "Description", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         LocalDateTime startTime = LocalDateTime.now();
         Duration duration = Duration.ofHours(1);
         task.setStartTime(startTime);
@@ -117,8 +116,8 @@ public class InMemoryTaskManagerTest {
     }
     @Test
     public void CheckTimeTest() {
-        Task task1 = new Task("Task 1", "Description 1");
-        Task task2 = new Task("Task 2", "Description 2");
+        Task task1 = new Task("Task 1", "Description 1", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
+        Task task2 = new Task("Task 2", "Description 2", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
 
         LocalDateTime now = LocalDateTime.now();
         task1.setStartTime(now.plusHours(1));
@@ -133,8 +132,8 @@ public class InMemoryTaskManagerTest {
 
     @Test
     public void OverlapTest() { // тест на пересечение двух задач во времени
-        Task task1 = new Task("Task 1", "Description 1");
-        Task task2 = new Task("Task 2", "Description 2");
+        Task task1 = new Task("Task 1", "Description 1", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
+        Task task2 = new Task("Task 2", "Description 2", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
 
         LocalDateTime now = LocalDateTime.now();
         task1.setStartTime(now.plusHours(1));
@@ -149,9 +148,9 @@ public class InMemoryTaskManagerTest {
     }
     @Test
     public void testGetPrioritizedTasks() {
-        Task task1 = new Task("Task 1", "Description 1");
-        Task task2 = new Task("Task 2", "Description 2");
-        Task task3 = new Task("Task 3", "Description 3");
+        Task task1 = new Task("Task 1", "Description 1", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
+        Task task2 = new Task("Task 2", "Description 2", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
+        Task task3 = new Task("Task 3", "Description 3", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
 
         LocalDateTime now = LocalDateTime.now();
         task1.setStartTime(now.plusHours(3));

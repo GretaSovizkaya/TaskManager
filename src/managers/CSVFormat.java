@@ -5,6 +5,9 @@ import basis.Status;
 import basis.Subtask;
 import basis.Task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class CSVFormat {
     protected static String taskToString(Task task) {
         String type = task instanceof Epic ? "EPIC" : task instanceof Subtask ? "SUBTASK" : "TASK";
@@ -39,7 +42,7 @@ public class CSVFormat {
                 task.setStatus(status);
                 break;
             default:
-                task = new Task(name, description);
+                task = new Task(name, description, Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
                 task.setId(id);
                 task.setStatus(status);
         }

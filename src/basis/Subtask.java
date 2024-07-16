@@ -1,12 +1,13 @@
 package basis;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class Subtask extends Task {
     private Epic epic;
 
     public Subtask(String name, String description, Epic epic) {
-        super(name, description);
+        super(name, description, Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         this.epic = epic;
     } //исправила
 

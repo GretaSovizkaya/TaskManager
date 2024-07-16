@@ -2,12 +2,14 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import basis.Status;
 import basis.Task;
 import managers.InMemoryHistoryManager;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import managers.Managers;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 
 class HistoryManagerTest {
@@ -24,7 +26,7 @@ class HistoryManagerTest {
     @Test
     public void shouldRemoveTaskFromHistory() { // удаление задачи из истории
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-        Task task = new Task("Task", "Description");
+        Task task = new Task("Task", "Description", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         historyManager.add(task);
         historyManager.remove(task.getId());
         List<Task> tasks = historyManager.getHistory();
@@ -34,7 +36,7 @@ class HistoryManagerTest {
     @Test
     public void testRemoveNonExistingTask() { // удаление несуществующей задачи
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-        Task task = new Task("Task", "Descpr");
+        Task task = new Task("Task", "Descpr", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         historyManager.add(task);
         historyManager.remove(666);
         List<Task> tasks = historyManager.getHistory();
@@ -44,7 +46,7 @@ class HistoryManagerTest {
     @Test
     public void shouldNotAddDuplicateTasksToHistory() { //наличие дубликатов в истории
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
-        Task task = new Task("Task", "Description");
+        Task task = new Task("Task", "Description", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         historyManager.add(task);
         historyManager.add(task); // Попытка добавить дубликат
         List<Task> tasks = historyManager.getHistory();
