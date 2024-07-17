@@ -16,7 +16,7 @@ public class Epic extends Task {
     private LocalDateTime startTime;
 
     @SerializedName("epic_endTime")
-    private LocalDateTime endTime; // field endTime
+    private LocalDateTime endTime;
 
     private List<Subtask> subtasks = new ArrayList<>();
 

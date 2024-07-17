@@ -50,20 +50,20 @@ public class EpicsHandler extends BaseHttpHandler {
     private String handleGet(String path) throws IOException {
         String idStr = path.substring(path.lastIndexOf("/") + 1);
         int id = parseInt(idStr);
-        Epic epic = taskManager.getEpicById(id); // Исправлено на taskManager
+        Epic epic = taskManager.getEpicById(id);
         return gson.toJson(epic);
     }
 
     private String handlePost(InputStream requestBody) throws IOException {
         InputStreamReader reader = new InputStreamReader(requestBody, StandardCharsets.UTF_8);
         Epic epic = gson.fromJson(reader, Epic.class);
-        taskManager.createNewEpic(epic); // Исправлено на taskManager
+        taskManager.createNewEpic(epic);
         return gson.toJson(epic);
     }
 
     private void handleDelete(String path) throws IOException {
         String idStr = path.substring(path.lastIndexOf("/") + 1);
         int id = parseInt(idStr);
-        taskManager.removeSubtaskById(id); // Исправлено на taskManager
+        taskManager.removeSubtaskById(id);
     }
 }

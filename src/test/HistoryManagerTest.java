@@ -24,7 +24,7 @@ class HistoryManagerTest {
     }
 
     @Test
-    public void shouldRemoveTaskFromHistory() { // удаление задачи из истории
+    public void shouldRemoveTaskFromHistory() {
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
         Task task = new Task("Task", "Description", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         historyManager.add(task);
@@ -34,7 +34,7 @@ class HistoryManagerTest {
     }
 
     @Test
-    public void testRemoveNonExistingTask() { // удаление несуществующей задачи
+    public void testRemoveNonExistingTask() {
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
         Task task = new Task("Task", "Descpr", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         historyManager.add(task);
@@ -44,11 +44,11 @@ class HistoryManagerTest {
     }
 
     @Test
-    public void shouldNotAddDuplicateTasksToHistory() { //наличие дубликатов в истории
+    public void shouldNotAddDuplicateTasksToHistory() {
         InMemoryHistoryManager historyManager = new InMemoryHistoryManager();
         Task task = new Task("Task", "Description", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         historyManager.add(task);
-        historyManager.add(task); // Попытка добавить дубликат
+        historyManager.add(task);
         List<Task> tasks = historyManager.getHistory();
         assertEquals(1, tasks.size());
         assertEquals(task, tasks.get(0));

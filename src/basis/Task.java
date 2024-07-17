@@ -9,8 +9,8 @@ public class Task {
     protected int id;
     protected String description;
     protected Status status;
-    protected Duration duration; //field duration
-    protected LocalDateTime startTime; // field startTime
+    protected Duration duration;
+    protected LocalDateTime startTime;
 
     public Duration getDuration() { // getter
         return duration;

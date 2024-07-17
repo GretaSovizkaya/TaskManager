@@ -32,7 +32,7 @@ public class PrioritizedHandler extends BaseHttpHandler {
     }
 
     private String handleGet() throws IOException {
-        TreeSet<Task> prioritizedTasks = taskManager.getPrioritizedTasks(); // Исправлено на taskManager
+        TreeSet<Task> prioritizedTasks = taskManager.getPrioritizedTasks();
         return gson.toJson(prioritizedTasks);
     }
 }

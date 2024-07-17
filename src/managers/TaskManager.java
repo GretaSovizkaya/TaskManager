@@ -30,11 +30,11 @@ public interface TaskManager {
 
     List<Task> getHistory();
 
-    Subtask getSubtaskById(Integer id); //добавлено
+    Subtask getSubtaskById(Integer id); 
 
-    Epic getEpicById(Integer id); //добавлено
+    Epic getEpicById(Integer id);
 
-    List<Epic> getAllEpics(); //добавлено
+    List<Epic> getAllEpics();
 
     void createNewSubtask(Subtask subtask);
 

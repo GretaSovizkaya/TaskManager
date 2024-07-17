@@ -102,7 +102,7 @@ public class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void shouldReturnEndTimeOfTask() { // проверка getEndTime
+    public void shouldReturnEndTimeOfTask() {
         Task task = new Task("Task", "Description", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         LocalDateTime startTime = LocalDateTime.now();
         Duration duration = Duration.ofHours(1);
@@ -131,7 +131,7 @@ public class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void OverlapTest() { // тест на пересечение двух задач во времени
+    public void OverlapTest() {
         Task task1 = new Task("Task 1", "Description 1", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         Task task2 = new Task("Task 2", "Description 2", Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
 

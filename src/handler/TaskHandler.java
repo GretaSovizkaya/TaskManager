@@ -37,7 +37,7 @@ public class TaskHandler extends BaseHttpHandler {
                     sendNotFound(httpExchange, "Method not allowed");
             }
 
-            sendText(httpExchange, response); // Отправка ответа после обработки
+            sendText(httpExchange, response);
         } catch (IOException e) {
             sendNotFound(httpExchange, "IOException occurred: " + e.getMessage());
         } catch (Exception e) {
@@ -46,18 +46,18 @@ public class TaskHandler extends BaseHttpHandler {
     }
 
     private String handleGet(String path) throws IOException {
-        List<Task> tasks = taskManager.getAllTypesTasks(); // Исправлено на taskManager
+        List<Task> tasks = taskManager.getAllTypesTasks();
         return gson.toJson(tasks);
     }
 
     private String handlePost(InputStream requestBody) throws IOException {
         InputStreamReader reader = new InputStreamReader(requestBody, StandardCharsets.UTF_8);
         Task task = gson.fromJson(reader, Task.class);
-        taskManager.createNewTask(task); // Исправлено на taskManager
+        taskManager.createNewTask(task);
         return gson.toJson(task);
     }
 
     private void handleDelete(String path) throws IOException {
-        taskManager.deleteAllTasks(null); // Исправлено на taskManager
+        taskManager.deleteAllTasks(null);
     }
 }

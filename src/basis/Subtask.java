@@ -9,7 +9,7 @@ public class Subtask extends Task {
     public Subtask(String name, String description, Epic epic) {
         super(name, description, Status.NEW, Duration.ofMinutes(5), LocalDateTime.now());
         this.epic = epic;
-    } //исправила
+    }
 
     public Epic getEpic() {
         return epic;
