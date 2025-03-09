@@ -1,12 +1,13 @@
 package basis;
 
 import java.util.*;
-public class Epic extends Task{
+
+public class Epic extends Task {
     private List<Subtask> subtasks = new ArrayList<>();
 
-    public Epic(int id, String name, String description) {
+    public Epic(String name, String description) {
         super(name, description);
-    }
+    } //исправила
 
     public List<Subtask> getSubtasks() {
         return subtasks;
