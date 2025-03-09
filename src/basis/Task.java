@@ -9,8 +9,8 @@ public class Task {
     protected int id;
     protected String description;
     protected Status status;
-    protected Duration duration; //field duration
-    protected LocalDateTime startTime; // field startTime
+    protected Duration duration;
+    protected LocalDateTime startTime;
 
     public Duration getDuration() { // getter
         return duration;
@@ -28,7 +28,7 @@ public class Task {
         this.startTime = startime;
     }
 
-    public Task(String name, String description) {
+    public Task(String name, String description, Status aNew, Duration duration, LocalDateTime now) {
         this.name = name;
         this.description = description;
         this.status = Status.NEW;

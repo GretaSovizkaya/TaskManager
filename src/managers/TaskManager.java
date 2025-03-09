@@ -3,6 +3,7 @@ package managers;
 import basis.*;
 
 import java.util.List;
+import java.util.TreeSet;
 
 public interface TaskManager {
     List<Task> getAllTypesTasks();
@@ -29,11 +30,11 @@ public interface TaskManager {
 
     List<Task> getHistory();
 
-    Subtask getSubtaskById(Integer id); //добавлено
+    Subtask getSubtaskById(Integer id); 
 
-    Epic getEpicById(Integer id); //добавлено
+    Epic getEpicById(Integer id);
 
-    List<Epic> getAllEpics(); //добавлено
+    List<Epic> getAllEpics();
 
     void createNewSubtask(Subtask subtask);
 
@@ -41,4 +42,5 @@ public interface TaskManager {
 
     void removeSubtaskById(Integer id);
 
+    TreeSet<Task> getPrioritizedTasks();
 }

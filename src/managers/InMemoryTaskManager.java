@@ -9,7 +9,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final HistoryManager historyManager;
     protected Map<Integer, Task> tasks = new HashMap<>();
     protected Map<Integer, Epic> epics = new HashMap<>();
-    protected Map<Integer, Subtask> subtasks = new HashMap<>();//пустую строку удалила
+    protected Map<Integer, Subtask> subtasks = new HashMap<>();
     protected static int newId = 1;
     public final TreeSet <Task> priorityTasks;
     static Comparator<Task> comparator = Comparator.comparing(Task::getStartTime);
@@ -56,7 +56,7 @@ public class InMemoryTaskManager implements TaskManager {
     private Integer generateNewId() {
         return newId++;
     }
-    public LocalDateTime getEndTime(Task task) { //дата и время завершения задачи
+    public LocalDateTime getEndTime(Task task) {
         if (task instanceof Epic) {
             LocalDateTime time = subtasks.get(((Epic) task).getSubtasks().getFirst()).getStartTime();
             ((Epic) task).getSubtasks().stream()
@@ -75,7 +75,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
     public TreeSet<Task> getPrioritizedTasks() { // вовзращаем список по прриоритету
         return priorityTasks;
-    } // возврат задач в заданном порядке
+    }
 
     protected boolean checkStartTime(Task task) {
         return task.getStartTime() != null;
