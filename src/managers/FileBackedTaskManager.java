@@ -5,10 +5,12 @@ import basis.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     public FileBackedTaskManager(File file) {
         this.file = file;
@@ -80,6 +82,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             sb.append("id,type,name,status,description,epic\n");
 
             for (Task task : tasks.values()) {
+
                 sb.append(CSVFormat.taskToString(task)).append("\n");
             }
             for (Epic epic : epics.values()) {

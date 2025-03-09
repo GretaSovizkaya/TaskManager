@@ -9,6 +9,10 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,6 +56,21 @@ public class FileBackedTaskManagerTest {
         assertEquals(task1,manager.getTaskById(idTask));
         assertEquals(subtask,manager.getSubtaskById(idSubtask));
         assertEquals(epic,manager.getEpicById(idEpic));
+    }
+
+    @Test
+    public void createAndSaveTaskFromFile() throws IOException {
+        Task task = new Task("task", "smth");
+        LocalDate data = LocalDate.of(2024, 7, 06);
+        LocalTime time = LocalTime.now();
+        LocalDateTime dataTime = LocalDateTime.of(data, time);
+        Duration duration = Duration.ofMinutes(12_545_655);
+        task.setStartTime(dataTime);
+        task.setDuration(duration);
+
+        manager.createNewTask(task);
+
+        assertNotNull(manager.getAllTypesTasks());
     }
 
 }

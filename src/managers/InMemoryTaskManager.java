@@ -2,6 +2,7 @@ package managers;
 
 import basis.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
@@ -10,10 +11,12 @@ public class InMemoryTaskManager implements TaskManager {
     protected Map<Integer, Epic> epics = new HashMap<>();
     protected Map<Integer, Subtask> subtasks = new HashMap<>();//пустую строку удалила
     protected static int newId = 1;
+    public final TreeSet <Task> priorityTasks;
+    static Comparator<Task> comparator = Comparator.comparing(Task::getStartTime);
 
-    //использую Managers
-    public InMemoryTaskManager() { // удалила конструктор и исправила
+    public InMemoryTaskManager() {
         this.historyManager = Managers.getDefaultHistory();
+        priorityTasks = new TreeSet<>(comparator);
     }
 
     @Override
@@ -45,10 +48,48 @@ public class InMemoryTaskManager implements TaskManager {
         if (task instanceof Epic) {
             epics.put(newId, (Epic) task);
         }
+        if (task.getStartTime() != null) {
+            priorityTasks.add(task);
+        }
     }
 
     private Integer generateNewId() {
         return newId++;
+    }
+    public LocalDateTime getEndTime(Task task) { //дата и время завершения задачи
+        if (task instanceof Epic) {
+            LocalDateTime time = subtasks.get(((Epic) task).getSubtasks().getFirst()).getStartTime();
+            ((Epic) task).getSubtasks().stream()
+                    .map(i -> subtasks.get(i).getDuration())
+                    .filter(Objects::nonNull)
+                    .peek(time::plus);
+
+            return time;
+        }
+        if (checkStartTime(task)) {
+            return task.getStartTime().plus(task.getDuration());
+
+        }
+        throw new RuntimeException("Чекните временной интервал, ошибка");
+
+    }
+    public TreeSet<Task> getPrioritizedTasks() { // вовзращаем список по прриоритету
+        return priorityTasks;
+    } // возврат задач в заданном порядке
+
+    protected boolean checkStartTime(Task task) {
+        return task.getStartTime() != null;
+    }
+    private boolean Overlap(Task task1, Task task2) {
+        return !getEndTime(task1).isBefore(task2.getStartTime())
+                && !getEndTime(task2).isBefore(task1.getStartTime());
+    }
+
+    public boolean checkTime(Task task) {
+        Optional<Task> first = priorityTasks.stream()
+                .filter(existingTask -> Overlap(existingTask, task))
+                .findFirst();
+        return first.isPresent();
     }
 
     @Override
@@ -102,9 +143,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Subtask> getSubtasksOfEpic(Integer epicId) {
-        Task epic = epics.get(epicId);
+        Epic epic = epics.get(epicId);
         if (epic != null) {
-            return new ArrayList<>(((Epic) epic).getSubtasks());
+            return new ArrayList<>(epic.getSubtasks());
         }
         return new ArrayList<>();
     }

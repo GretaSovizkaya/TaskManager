@@ -6,7 +6,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.TreeSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -96,6 +100,75 @@ public class InMemoryTaskManagerTest {
 
         Task retrievedTask = manager.getTaskById(task1.getId());
         Assertions.assertEquals(task1, retrievedTask);
+    }
+
+    @Test
+    public void shouldReturnEndTimeOfTask() { // проверка getEndTime
+        Task task = new Task("Task", "Description");
+        LocalDateTime startTime = LocalDateTime.now();
+        Duration duration = Duration.ofHours(1);
+        task.setStartTime(startTime);
+        task.setDuration(duration);
+
+        manager.createNewTask(task);
+
+        LocalDateTime expectedEndTime = startTime.plus(duration);
+        Assertions.assertEquals(expectedEndTime, manager.getEndTime(task));
+    }
+    @Test
+    public void CheckTimeTest() {
+        Task task1 = new Task("Task 1", "Description 1");
+        Task task2 = new Task("Task 2", "Description 2");
+
+        LocalDateTime now = LocalDateTime.now();
+        task1.setStartTime(now.plusHours(1));
+        task1.setDuration(Duration.ofHours(2));
+        task2.setStartTime(now.plusHours(4));
+        task2.setDuration(Duration.ofHours(2));
+
+        manager.createNewTask(task1);
+
+        assertFalse(manager.checkTime(task2));
+    }
+
+    @Test
+    public void OverlapTest() { // тест на пересечение двух задач во времени
+        Task task1 = new Task("Task 1", "Description 1");
+        Task task2 = new Task("Task 2", "Description 2");
+
+        LocalDateTime now = LocalDateTime.now();
+        task1.setStartTime(now.plusHours(1));
+        task1.setDuration(Duration.ofHours(2));
+        task2.setStartTime(now.plusHours(2));
+        task2.setDuration(Duration.ofHours(2));
+
+        manager.createNewTask(task1);
+        manager.createNewTask(task2);
+
+        assertTrue(manager.checkTime(task2));
+    }
+    @Test
+    public void testGetPrioritizedTasks() {
+        Task task1 = new Task("Task 1", "Description 1");
+        Task task2 = new Task("Task 2", "Description 2");
+        Task task3 = new Task("Task 3", "Description 3");
+
+        LocalDateTime now = LocalDateTime.now();
+        task1.setStartTime(now.plusHours(3));
+        task1.setDuration(Duration.ofHours(1));
+        task2.setStartTime(now.plusHours(1));
+        task2.setDuration(Duration.ofHours(1));
+        task3.setStartTime(now.plusHours(2));
+        task3.setDuration(Duration.ofHours(1));
+
+        manager.createNewTask(task1);
+        manager.createNewTask(task2);
+        manager.createNewTask(task3);
+
+        TreeSet<Task> prioritizedTasks = manager.getPrioritizedTasks();
+        assertEquals(3, prioritizedTasks.size());
+        assertEquals(task2, prioritizedTasks.first());
+        assertEquals(task1, prioritizedTasks.last());
     }
 }
 
